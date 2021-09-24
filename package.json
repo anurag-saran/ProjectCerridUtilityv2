@@ -1,0 +1,27 @@
+{
+   "name": "sample",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "devDependencies": {
+      "ts-node": "3.3.0",
+      "@types/node": "^8.0.29",
+      "typescript": "3.3.3333"
+   },
+   "dependencies": {
+      "body-parser": "^1.19.0",
+      "cookie-parser": "^1.4.5",
+      "cors": "^2.8.5",
+      "express": "^4.17.1",
+      "line-reader": "^0.4.0",
+      "multer": "^1.4.3",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.37",
+      "typeorm-model-generator": "^0.4.6",
+      "xml-js": "^1.6.11",
+      "xml2js": "^0.4.23"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts"
+   }
+}

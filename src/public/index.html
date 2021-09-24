@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>XML App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header class="py-3 mb-4 border-bottom">
+            <div class="container d-flex flex-wrap justify-content-center">
+                <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                    <span class="fs-4">XML App</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div id="msg"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+
+                    <label for="xmlentry" class="form-label">Enter XML</label>
+                    <textarea class="form-control" id="xmlentry" rows="15"></textarea>
+                  
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="text-end">
+                        <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+        <script src="scripts/xmlToJson.js"></script>
+        <script src="scripts/app.js"></script>
+    </body>
+</html>
