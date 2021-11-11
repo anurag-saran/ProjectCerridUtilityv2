@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>XML App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                <span class="fs-4">XML App</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div id="msg"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-end mt-2">
+                <button type="button" class="btn btn-primary" onclick="onProcessAllRequest()"
+                    id="btn-submit-mock">Submit Request</button>
+            </div>
+            <div class="col-6 text-end mt-2">
+                <button type="button" class="btn btn-primary" onclick="onMockCall('#xmlmock', '#xmlentry')"
+                    id="btn-submit-mock">Insert Data </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2 class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Open Companies
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <form name="fileUpload">
+                    <!-- <input type="file" onchange="uploadFile()" id = "inptFile" type = "file"> -->
+                </form>
+                <label for="xmlmock" class="form-label">OpenCompanies(req)</label>
+
+                <textarea class="form-control" id="opencompreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" onclick="onMockCall('#xmlmock', '#xmlentry')"
+                        id="btn-submit-mock">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry" class="form-label">OpenCompanies(res)</label>
+                <textarea class="form-control" id="opencompres" rows="3"></textarea>
+                <!-- 
+                <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Ledger Group
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock1" class="form-label">LedgerGrp(req)</label>
+
+                <textarea class="form-control" id="ledgergrpreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock1','#xmlentry1')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry1" class="form-label">LedgerGrp(res)</label>
+                <textarea class="form-control" id="edgergrpres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Ledger
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock2" class="form-label">Ledger(req)</label>
+
+                <textarea class="form-control" id="ledgerreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock2','#xmlentry2')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry2" class="form-label">Ledger(res)</label>
+                <textarea class="form-control" id="ledgerres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    StockGroup
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock3" class="form-label">StockGroup(req)</label>
+
+                <textarea class="form-control" id="stockgrpreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock3','#xmlentry3')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry3" class="form-label">StockGroup(res)</label>
+                <textarea class="form-control" id="stockgrpres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    StockCategory
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock4" class="form-label">StockCategory(req)</label>
+
+                <textarea class="form-control" id="stockcatreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock4','#xmlentry4')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry4" class="form-label">StockCategory(res)</label>
+                <textarea class="form-control" id="stockcatres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    StockUnits
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock5" class="form-label">StockUnits(req)</label>
+
+                <textarea class="form-control" id="stockunitreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock5','#xmlentry5')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry5" class="form-label">StockUnits(res)</label>
+                <textarea class="form-control" id="stockunitres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    StockItem
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock6" class="form-label">StockItem(req)</label>
+
+                <textarea class="form-control" id="stockitemreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock6','#xmlentry6')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry6" class="form-label">StockItem(res)</label>
+                <textarea class="form-control" id="stockitemres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Godown
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock7" class="form-label">Godown(req)</label>
+
+                <textarea class="form-control" id="godownreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock7','#xmlentry7')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry7" class="form-label">Godown(res)</label>
+                <textarea class="form-control" id="godownres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    VoucherType
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock8" class="form-label">VoucherType(req)</label>
+
+                <textarea class="form-control" id="vouchertypereq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock8','#xmlentry8')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry8" class="form-label">VoucherType(res)</label>
+                <textarea class="form-control" id="vouchertyperes" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Vouchers
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock9" class="form-label">Vouchers(req)</label>
+
+                <textarea class="form-control" id="voucherreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock9','#xmlentry9')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry9" class="form-label">Vouchers(res)</label>
+                <textarea class="form-control" id="voucherres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Bill
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock10" class="form-label">Bill(req)</label>
+
+                <textarea class="form-control" id="billreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock10','#xmlentry10')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry10" class="form-label">Bill(res)</label>
+                <textarea class="form-control" id="billres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    BalanceSheet
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock11" class="form-label">BalanceSheet(req)</label>
+
+                <textarea class="form-control" id="balancesheetreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock11','#xmlentry11')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry11" class="form-label">BalanceSheet(res)</label>
+                <textarea class="form-control" id="balancesheetres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Register
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock12" class="form-label">Register(req)</label>
+
+                <textarea class="form-control" id="registerreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock12','#xmlentry12')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry12" class="form-label">Register(res)</label>
+                <textarea class="form-control" id="registerres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    ExpenseReport
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock13" class="form-label">ExpenseReport(req)</label>
+
+                <textarea class="form-control" id="expensereportreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock13','#xmlentry13')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry13" class="form-label">ExpenseReport(res)</label>
+                <textarea class="form-control" id="expensereportres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    InventoryReport
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock14" class="form-label">InventoryReport(req)</label>
+
+                <textarea class="form-control" id="inventoryreportreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock14','#xmlentry14')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry14" class="form-label">InventoryReport(res)</label>
+                <textarea class="form-control" id="inventoryreportres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    ProfitAndLoss
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock15" class="form-label">ProfitAndLoss(req)</label>
+
+                <textarea class="form-control" id="profit_loss_req" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock15','#xmlentry15')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry15" class="form-label">ProfitAndLoss(res)</label>
+                <textarea class="form-control" id="profit_loss_res" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Balance
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock16" class="form-label">Balance(req)</label>
+
+                <textarea class="form-control" id="balancereq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock16','#xmlentry16')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry16" class="form-label">Balance(res)</label>
+                <textarea class="form-control" id="balanceres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    Cashflow
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock17" class="form-label">Cashflow(req)</label>
+
+                <textarea class="form-control" id="cashflowreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock17','#xmlentry17')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry17" class="form-label">Cashflow(res)</label>
+                <textarea class="form-control" id="cashflowres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h2 role="button" class="toggle-accordion-header close">
+                    <p style="float: right;">
+                        <span class="plus">+</span>
+                        <span class="minus">-</span>
+                    </p>
+                    RegisterDaily
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <label for="xmlmock18" class="form-label">RegisterDaily(req)</label>
+
+                <textarea class="form-control" id="registerdailyreq" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit-mock1"
+                        onclick="onMockCall('#xmlmock18','#xmlentry18')">Submit</button>
+                </div> -->
+            </div>
+            <div class="col-6">
+
+                <label for="xmlentry18" class="form-label">RegisterDaily(res)</label>
+                <textarea class="form-control" id="registerdailyres" rows="3"></textarea>
+
+                <!-- <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary" id="btn-submit1">Insert</button>
+                </div> -->
+            </div>
+        </div>
+        <br />
+    </div>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+    <script src="scripts/xmlToJson.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+
+</html>

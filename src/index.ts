@@ -26,7 +26,7 @@ const fs = require('fs');
 const lineReader = require('line-reader');
 
 const app = express()
-
+const request = require('request');
 // app.use(express.urlencoded({extended: true}));	
 // app.use(cors())	
 // app.use(express.json())	
@@ -44,13 +44,19 @@ app.get("/api",(req,res)=>{
 app.get('/home', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/home.html'));  
 });
+app.get('/process-all-messages', function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/allmessage.html'));  
+});
+
+
+
+
 
 createConnection().then(async connection => {
 
     console.log("connected")
     // create express app
     
-   
     app.post("/api/v1", async (req, res) => {
         var result = JSON.parse(convert.xml2json(req.body.xmld, { compact: false, spaces: 4 }));
         //console.log('name DB :- ' + JSON.stringify(result));        
