@@ -3498,21 +3498,63 @@ function onXMLSubmit() {
 }
 
 function onProcessAllRequest() {
+    var arr = [];
+    arr.push($("#opencompreq").val());
+    arr.push($("#ledgergrpreq").val());
+    arr.push($("#ledgerreq").val());
+    arr.push($("#stockgrpreq").val());
+    arr.push($("#stockcatreq").val());
+    arr.push($("#stockunitreq").val());
+    arr.push($("#stockitemreq").val());
+    arr.push($("#godownreq").val());
+    arr.push($("#vouchertypereq").val());
+    arr.push($("#voucherreq").val());
+    arr.push($("#billreq").val());
+    arr.push($("#balancesheetreq").val());
+    arr.push($("#registerreq").val());
+    arr.push($("#expensereportreq").val());
+    arr.push($("#inventoryreportreq").val());
+    arr.push($("#profit_loss_req").val());
+    arr.push($("#balancereq").val());
+    arr.push($("#cashflowreq").val());
+    arr.push($("#registerdailyreq").val());
     var xmlString = $("#opencompreq").val();    
     if (xmlString == "") {
         return false;
     }   
     xmlObj = parseXml(xmlString);
     console.log('data ' + xmlObj);
-   
+    console.log('data ' + arr.length);   
     $.ajax({
         method: "POST",
-        url: "http://localhost:9000",
-        data: xmlString,
+        url: "/tally",
+        data: {
+            data: arr
+        },
         success: function (res) {
-            console.log('result ' + res);           
+            console.log('result ');
+            console.log('result ' + res.status);
+            $("#opencompres").val(res.data[0]);
+            $("#ledgergrpres").val(res.data[1]);
+            $("#ledgerres").val(res.data[2]);
+            $("#stockgrpres").val(res.data[3]);
+            $("#stockcatres").val(res.data[4]);
+            $("#stockunitres").val(res.data[5]);
+            $("#stockitemres").val(res.data[6]);
+            $("#godownres").val(res.data[7]);
+            $("#vouchertyperes").val(res.data[8]);
+            $("#voucherres").val(res.data[9]);
+            $("#billres").val(res.data[10]);
+            $("#balancesheetres").val(res.data[11]);
+            $("#registerres").val(res.data[12]);
+            $("#expensereportres").val(res.data[13]);
+            $("#inventoryreportres").val(res.data[14]);
+            $("#profit_loss_res").val(res.data[15]);
+            $("#balanceres").val(res.data[16]);
+            $("#cashflowres").val(res.data[17]);
+            $("#registerdailyres").val(res.data[18]);
         }
-    });    
+    });     
         
 }
 
