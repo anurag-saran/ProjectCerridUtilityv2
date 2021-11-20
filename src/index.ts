@@ -78,7 +78,7 @@ createConnection().then(async connection => {
     app.post("/api/v1", async (req, res) => {
         var result = JSON.parse(convert.xml2json(req.body.xmld, { compact: false, spaces: 4 }));
         //console.log('name DB :- ' + JSON.stringify(result));        
-        await processXmlDataAndInsert(result, res, connection);
+        await processXmlDataAndInsert(result, res, connection, true);
     });
     app.post("/api/v2", async (req, res) => {        
         var fileName = req.body.xmld + '\\listfileName.csv';
@@ -90,107 +90,123 @@ createConnection().then(async connection => {
                 const data = fs.readFileSync(insertFileName, 'utf8');            
                 var result = JSON.parse(convert.xml2json(data, { compact: false, spaces: 4 }));
                 //console.log('name DB :- ' + JSON.stringify(result));        
-                await processXmlDataAndInsert(result, res, connection);            
+                await processXmlDataAndInsert(result, res, connection, true);            
             } catch (err) {
                 console.log('Err '+err);
             }
         });
             
     });
+
+    app.post("/api/insert/allmessage", async (req, res) => {
+        for (let data of req.body.data) {
+            var result = JSON.parse(convert.xml2json(data, { compact: false, spaces: 4 }));    
+            await processXmlDataAndInsert(result, res, connection, false);                  
+        }
+        res.json({
+            status: 'success',
+            message: 'Insert All Message Successfully'            
+        });
+        //console.log('name DB :- ' + JSON.stringify(result));        
+        
+    });
 }).catch(error => console.log("TypeORM connection error: ", error));
 
-async function processXmlDataAndInsert(result, res, connection) {
+async function processXmlDataAndInsert(result, res, connection, writeres) {
     var db_name = result.elements[0].elements[0].name;
-        console.log(' DB :- ' + db_name);        
-        // parsing xml data
-        var jsonArray = [];
-        for (var i = 0; i < result.elements[0].elements.length; i++) {
-            var itemsList = result.elements[0].elements[i].elements;
-           // console.log(itemsList);
-            // console.log(result.elements[0].elements[i]);
-            var dbModel = {};
-            for (var j = 0; j < itemsList.length; j++) {
-                var rowName = itemsList[j].name;
-                var rowValue = "";
-                if (typeof itemsList[j].elements == "undefined" || itemsList[j].elements == null || itemsList[j].elements == "") {
-                    rowValue = null;
-                } else {
-                    rowValue = itemsList[j].elements[0].text;
-                }
-                 
-                if (typeof itemsList[j].elements != "undefined" && itemsList[j].elements.length > 1) {
-                    console.log(itemsList[j].elements);                    
-                    var inneritemsList = itemsList[j].elements;
-                    var innerArray;
-                    var innerdbModel = {};
-                    for (var ij = 0; ij < inneritemsList.length; ij++) {
-                        var inrowName = inneritemsList[ij].name;
-                        var inrowValue = "";
-                        if (typeof inneritemsList[ij].elements == "undefined" || inneritemsList[ij].elements == null || inneritemsList[ij].elements == "") {
-                            inrowValue = null;
-                        } else {
-                            inrowValue = inneritemsList[ij].elements[0].text;
-                        }                        
-                        innerdbModel[inrowName] = inrowValue;
-
-                        // Sub Sub Elements... for Voucher Mostly
-
-                        if (typeof inneritemsList[ij].elements != "undefined" && inneritemsList[ij].elements.length > 1) {
-                            console.log(inneritemsList[ij].elements);                    
-                            var subitemsList = inneritemsList[ij].elements;
-                            var subArray;
-                            var subModel = {};
-                            for (var k = 0; k < subitemsList.length; k++) {
-                                var subrowName = subitemsList[k].name;
-                                var subrowValue = "";
-                                if (typeof subitemsList[k].elements == "undefined" || subitemsList[k].elements == null || subitemsList[k].elements == "") {
-                                    subrowValue = null;
-                                } else {
-                                    subrowValue = subitemsList[k].elements[0].text;
-                                }                        
-                                subModel[subrowName] = subrowValue;
-                            }
-                            if (typeof innerdbModel[inrowName] == "undefined") {
-                                console.log('coming if Sub ' + innerdbModel[inrowName]);
-                                subArray = [];                        
-                            } else {
-                                console.log('coming esle Sub ' + innerdbModel[inrowName]);
-                                subArray = innerdbModel[inrowName];
-                            }
-                            subArray.push(subModel);
-                            innerdbModel[inrowName] = subArray;
-                            console.log(inrowName + ": " + innerdbModel);
-                        } else {
-                            innerdbModel[inrowName] = inrowValue;
-                        }
-                    }
-                    console.log('existing Data ' + dbModel[rowName]);
-                    if (typeof dbModel[rowName] == "undefined") {
-                        console.log('coming if ' + dbModel[rowName]);
-                        innerArray = [];
-                        
-                    } else {
-                        console.log('coming else ' + dbModel[rowName]);
-                        innerArray = dbModel[rowName];
-                    }
-                    innerArray.push(innerdbModel);
-                    dbModel[rowName] = innerArray;
-                    console.log(rowName + ": " + innerArray);                    
-                } else {
-                    dbModel[rowName] = rowValue;
-                }
+    console.log(' DB :- ' + db_name);
+    // parsing xml data
+    var jsonArray = [];
+    for (var i = 0; i < result.elements[0].elements.length; i++) {
+        var itemsList = result.elements[0].elements[i].elements;
+        // console.log(itemsList);
+        // console.log(result.elements[0].elements[i]);
+        var dbModel = {};
+        for (var j = 0; j < itemsList.length; j++) {
+            var rowName = itemsList[j].name;
+            var rowValue = "";
+            if (typeof itemsList[j].elements == "undefined" || itemsList[j].elements == null || itemsList[j].elements == "") {
+                rowValue = null;
+            } else {
+                rowValue = itemsList[j].elements[0].text;
             }
-            jsonArray.push(dbModel);
+                 
+            if (typeof itemsList[j].elements != "undefined" && itemsList[j].elements.length > 1) {
+                console.log(itemsList[j].elements);
+                var inneritemsList = itemsList[j].elements;
+                var innerArray;
+                var innerdbModel = {};
+                for (var ij = 0; ij < inneritemsList.length; ij++) {
+                    var inrowName = inneritemsList[ij].name;
+                    var inrowValue = "";
+                    if (typeof inneritemsList[ij].elements == "undefined" || inneritemsList[ij].elements == null || inneritemsList[ij].elements == "") {
+                        inrowValue = null;
+                    } else {
+                        inrowValue = inneritemsList[ij].elements[0].text;
+                    }
+                    innerdbModel[inrowName] = inrowValue;
+
+                    // Sub Sub Elements... for Voucher Mostly
+
+                    if (typeof inneritemsList[ij].elements != "undefined" && inneritemsList[ij].elements.length > 1) {
+                        console.log(inneritemsList[ij].elements);
+                        var subitemsList = inneritemsList[ij].elements;
+                        var subArray;
+                        var subModel = {};
+                        for (var k = 0; k < subitemsList.length; k++) {
+                            var subrowName = subitemsList[k].name;
+                            var subrowValue = "";
+                            if (typeof subitemsList[k].elements == "undefined" || subitemsList[k].elements == null || subitemsList[k].elements == "") {
+                                subrowValue = null;
+                            } else {
+                                subrowValue = subitemsList[k].elements[0].text;
+                            }
+                            subModel[subrowName] = subrowValue;
+                        }
+                        if (typeof innerdbModel[inrowName] == "undefined") {
+                            console.log('coming if Sub ' + innerdbModel[inrowName]);
+                            subArray = [];
+                        } else {
+                            console.log('coming esle Sub ' + innerdbModel[inrowName]);
+                            subArray = innerdbModel[inrowName];
+                        }
+                        subArray.push(subModel);
+                        innerdbModel[inrowName] = subArray;
+                        console.log(inrowName + ": " + innerdbModel);
+                    } else {
+                        innerdbModel[inrowName] = inrowValue;
+                    }
+                }
+                console.log('existing Data ' + dbModel[rowName]);
+                if (typeof dbModel[rowName] == "undefined") {
+                    console.log('coming if ' + dbModel[rowName]);
+                    innerArray = [];
+                        
+                } else {
+                    console.log('coming else ' + dbModel[rowName]);
+                    innerArray = dbModel[rowName];
+                }
+                innerArray.push(innerdbModel);
+                dbModel[rowName] = innerArray;
+                console.log(rowName + ": " + innerArray);
+            } else {
+                dbModel[rowName] = rowValue;
+            }
         }
-        console.log("------------------INSERT INTO DB------------------");
-        console.log('json Array ',JSON.stringify(jsonArray));
-        const response = await recordInTable(db_name, jsonArray, connection);        
+        jsonArray.push(dbModel);
+    }
+    console.log("------------------INSERT INTO DB------------------");
+    console.log('json Array ', JSON.stringify(jsonArray));
+    const response = await recordInTable(db_name, jsonArray, connection);
+    if (writeres) {
         res.json({
             status: 'success',
             message: 'Added',
             count: response
         });
+    }
 }
+
 async function recordInTable(db_name, jsonArray,connection) {
     switch (db_name) {
         case "COMPANIES":
