@@ -65,7 +65,7 @@ $(document).ready(function(e) {
                   </FIELD>
                   
                   <FIELD NAME="XMLIntCName">
-                      <XMLTAG>&quot;Name&quot;</XMLTAG>
+                      <XMLTAG>&quot;COMPANYNAME&quot;</XMLTAG>
                       <SET>$Name</SET>
                   </FIELD>
                   
@@ -3558,3 +3558,41 @@ function onProcessAllRequest() {
         
 }
 
+function onInsertAllResponseDatainDB() {
+    var arr = [];
+    arr.push($("#opencompres").val());
+    arr.push($("#ledgergrpres").val());
+    arr.push($("#ledgerres").val());
+    arr.push($("#stockgrpres").val());
+    arr.push($("#stockcatres").val());
+    arr.push($("#stockunitres").val());
+    arr.push($("#stockitemres").val());
+    arr.push($("#godownres").val());
+    arr.push($("#vouchertyperes").val());
+    arr.push($("#voucherres").val());
+    arr.push($("#billres").val());
+    arr.push($("#balancesheetres").val());
+    arr.push($("#registerres").val());
+    arr.push($("#expensereportres").val());
+    arr.push($("#inventoryreportres").val());
+    arr.push($("#profit_loss_res").val());
+    arr.push($("#balanceres").val());
+    arr.push($("#cashflowres").val());
+    arr.push($("#registerdailyres").val());
+    console.log('data ' + arr.length); 
+    $.ajax({
+        method: "POST",
+        url: "/api/insert/allmessage",
+        data: {
+            data: arr
+        },
+        success: function (res) {
+            console.log('result ' + res);
+            if (res.status == "success") {
+                $("#msg").html('<div class="alert alert-success">' + res.message + '</div>')
+            } else {
+                $("#msg").html('<div class="alert alert-danger">' + res.message + '</div>')
+            }
+        }
+    });
+}
