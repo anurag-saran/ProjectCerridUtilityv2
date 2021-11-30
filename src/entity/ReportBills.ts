@@ -17,7 +17,7 @@ export class ReportBills {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("character varying", { name: "billid" })
+  @Column("character varying", { name: "billid", unique: true })
   BILLID: string;
 
   @Column("date", { name: "billdate" })

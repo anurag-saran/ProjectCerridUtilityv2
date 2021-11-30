@@ -17,7 +17,7 @@ export class ReportCashFlow {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("character varying", { name: "monthname" })
+  @Column("character varying", { name: "monthname", unique: true })
   MONTHNAME: string;
 
   @Column("character varying", { name: "debit", nullable: true })
